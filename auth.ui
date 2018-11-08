@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>867</width>
+    <height>620</height>
+   </rect>
+  </property>
+  <property name="font">
+   <font>
+    <pointsize>12</pointsize>
+   </font>
+  </property>
+  <property name="windowTitle">
+   <string>Authorization</string>
+  </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>../../../../../../../PycharmProjects/Project_S/venv/bandit.png</normaloff>../../../../../../../PycharmProjects/Project_S/venv/bandit.png</iconset>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QPushButton" name="AuthVkButton">
+    <property name="geometry">
+     <rect>
+      <x>270</x>
+      <y>210</y>
+      <width>311</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Авторизация через Вк</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="AuthTokenButton">
+    <property name="geometry">
+     <rect>
+      <x>270</x>
+      <y>270</y>
+      <width>311</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Авторизация через Токен</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

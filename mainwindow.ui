@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>886</width>
+    <height>700</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>886</width>
+    <height>700</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>886</width>
+    <height>700</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>Mafia</string>
+  </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>bandit.png</normaloff>bandit.png</iconset>
+  </property>
+  <property name="autoFillBackground">
+   <bool>false</bool>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QMainWindow {
+	background-image: url(mafia.jpg) ;
+}
+</string>
+  </property>
+  <property name="toolButtonStyle">
+   <enum>Qt::ToolButtonIconOnly</enum>
+  </property>
+  <property name="documentMode">
+   <bool>true</bool>
+  </property>
+  <property name="tabShape">
+   <enum>QTabWidget::Rounded</enum>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QWidget" name="layoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>150</x>
+      <y>120</y>
+      <width>592</width>
+      <height>420</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout">
+     <property name="spacing">
+      <number>6</number>
+     </property>
+     <property name="leftMargin">
+      <number>0</number>
+     </property>
+     <property name="topMargin">
+      <number>0</number>
+     </property>
+     <property name="rightMargin">
+      <number>0</number>
+     </property>
+     <property name="bottomMargin">
+      <number>0</number>
+     </property>
+     <item>
+      <layout class="QHBoxLayout" name="_2">
+       <property name="spacing">
+        <number>5</number>
+       </property>
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="QTabWidget" name="tabWidget">
+         <property name="currentIndex">
+          <number>0</number>
+         </property>
+         <widget class="QWidget" name="tab">
+          <attribute name="title">
+           <string>Rooms</string>
+          </attribute>
+          <widget class="QTableWidget" name="tableofrooms">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>10</y>
+             <width>571</width>
+             <height>341</height>
+            </rect>
+           </property>
+           <property name="editTriggers">
+            <set>QAbstractItemView::NoEditTriggers</set>
+           </property>
+           <column>
+            <property name="text">
+             <string>name</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>admin</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>Member/Max member</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>password</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>started?</string>
+            </property>
+            <property name="font">
+             <font>
+              <italic>false</italic>
+             </font>
+            </property>
+           </column>
+          </widget>
+          <widget class="QPushButton" name="creationButthon">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>360</y>
+             <width>571</width>
+             <height>31</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>CreateNewRoom</string>
+           </property>
+          </widget>
+          <widget class="QPushButton" name="reboot">
+           <property name="geometry">
+            <rect>
+             <x>550</x>
+             <y>10</y>
+             <width>31</width>
+             <height>21</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>۞</string>
+           </property>
+          </widget>
+         </widget>
+         <widget class="QWidget" name="tab_3">
+          <attribute name="title">
+           <string>MainChat</string>
+          </attribute>
+          <widget class="QTextBrowser" name="ChatHistory_Main">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>10</y>
+             <width>561</width>
+             <height>321</height>
+            </rect>
+           </property>
+          </widget>
+          <widget class="QLineEdit" name="messageLineEdit_2">
+           <property name="geometry">
+            <rect>
+             <x>70</x>
+             <y>340</y>
+             <width>411</width>
+             <height>20</height>
+            </rect>
+           </property>
+          </widget>
+          <widget class="QLabel" name="label_4">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>320</y>
+             <width>91</width>
+             <height>51</height>
+            </rect>
+           </property>
+           <property name="font">
+            <font>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string>Message:</string>
+           </property>
+          </widget>
+          <widget class="QPushButton" name="sendButton_2">
+           <property name="geometry">
+            <rect>
+             <x>490</x>
+             <y>340</y>
+             <width>81</width>
+             <height>21</height>
+            </rect>
+           </property>
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="font">
+            <font>
+             <weight>75</weight>
+             <bold>true</bold>
+             <underline>false</underline>
+             <strikeout>false</strikeout>
+            </font>
+           </property>
+           <property name="toolTip">
+            <string>Sends a message to other people</string>
+           </property>
+           <property name="whatsThis">
+            <string/>
+           </property>
+           <property name="text">
+            <string>Send</string>
+           </property>
+          </widget>
+         </widget>
+         <widget class="QWidget" name="tab_2">
+          <attribute name="title">
+           <string>RoleChat</string>
+          </attribute>
+          <widget class="QTextBrowser" name="ChatHistory_Role">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>10</y>
+             <width>561</width>
+             <height>321</height>
+            </rect>
+           </property>
+          </widget>
+          <widget class="QLabel" name="label_5">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>320</y>
+             <width>91</width>
+             <height>51</height>
+            </rect>
+           </property>
+           <property name="font">
+            <font>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string>Message:</string>
+           </property>
+          </widget>
+          <widget class="QLineEdit" name="messageLineEdit_3">
+           <property name="geometry">
+            <rect>
+             <x>70</x>
+             <y>340</y>
+             <width>411</width>
+             <height>20</height>
+            </rect>
+           </property>
+          </widget>
+          <widget class="QPushButton" name="sendButton_3">
+           <property name="geometry">
+            <rect>
+             <x>490</x>
+             <y>340</y>
+             <width>81</width>
+             <height>21</height>
+            </rect>
+           </property>
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="font">
+            <font>
+             <weight>75</weight>
+             <bold>true</bold>
+             <underline>false</underline>
+             <strikeout>false</strikeout>
+            </font>
+           </property>
+           <property name="toolTip">
+            <string>Sends a message to other people</string>
+           </property>
+           <property name="whatsThis">
+            <string/>
+           </property>
+           <property name="text">
+            <string>Send</string>
+           </property>
+          </widget>
+         </widget>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>886</width>
+     <height>21</height>
+    </rect>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

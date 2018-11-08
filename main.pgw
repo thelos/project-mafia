@@ -1,0 +1,48 @@
+import sys
+from PyQt5 import QtWidgets
+import auth
+import main_form_ui
+from Client import SendAToken
+token = 0
+id = 0
+class AuthWindow(QtWidgets.QMainWindow, auth.Ui_MainWindow):
+    def __init__(self):
+        super().__init__()
+        self.InitUi()
+        self.count = 0
+
+    def InitUi(self):
+        self.setupUi(self)
+        self.AuthTokenButton.clicked.connect(self.AuthToken)
+
+    def AuthToken(self):
+        while self.count < 5:
+            text, ok = QtWidgets.QInputDialog.getText(None, "Введите Токен", "Введите токен:", text="Token")
+            s = SendAToken(text)
+            print(s)
+            if ok and s != '0':
+                token = s[1]
+                id = s[0]
+                GameWin().show()
+                self.close()
+                break
+            self.count += 1
+        if self.count == 5:
+            self.close()
+
+
+class GameWin(QtWidgets.QMainWindow, main_form_ui.Ui_MainWindow):
+    def __init__(self):
+        super().__init__()
+        self.InitUi()
+
+    def InitUi(self):
+        self.setupUi(self)
+
+def main():
+    app = QtWidgets.QApplication(sys.argv)  # Новый экземпляр QApplication
+    window = AuthWindow()  # Создаём объект класса ExampleApp
+    window.show()
+    app.exec_()  # и запускаем приложение
+if __name__ == '__main__':  # Если мы запускаем файл напрямую, а не импортируем
+    main()  # то запускаем функцию main()
