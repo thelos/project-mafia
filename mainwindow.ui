@@ -27,7 +27,7 @@
   </property>
   <property name="windowIcon">
    <iconset>
-    <normaloff>bandit.png</normaloff>bandit.png</iconset>
+    <normaloff>bandit.ico</normaloff>bandit.ico</iconset>
   </property>
   <property name="autoFillBackground">
    <bool>false</bool>
@@ -36,7 +36,10 @@
    <string notr="true">QMainWindow {
 	background-image: url(mafia.jpg) ;
 }
-</string>
+QTabWidget{
+	background-image: url(mafia.jpg) ;
+}
+	font: 8pt &quot;MV Boli&quot;;</string>
   </property>
   <property name="toolButtonStyle">
    <enum>Qt::ToolButtonIconOnly</enum>
@@ -52,7 +55,7 @@
     <property name="geometry">
      <rect>
       <x>150</x>
-      <y>120</y>
+      <y>150</y>
       <width>592</width>
       <height>420</height>
      </rect>
@@ -92,6 +95,16 @@
        </property>
        <item>
         <widget class="QTabWidget" name="tabWidget">
+         <property name="font">
+          <font>
+           <pointsize>10</pointsize>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true"/>
+         </property>
          <property name="currentIndex">
           <number>0</number>
          </property>
@@ -107,6 +120,9 @@
              <width>571</width>
              <height>341</height>
             </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true"/>
            </property>
            <property name="editTriggers">
             <set>QAbstractItemView::NoEditTriggers</set>
@@ -151,6 +167,15 @@
              <height>31</height>
             </rect>
            </property>
+           <property name="font">
+            <font>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true"/>
+           </property>
            <property name="text">
             <string>CreateNewRoom</string>
            </property>
@@ -163,6 +188,9 @@
              <width>31</width>
              <height>21</height>
             </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true"/>
            </property>
            <property name="text">
             <string>۞</string>
@@ -182,6 +210,17 @@
              <height>321</height>
             </rect>
            </property>
+           <property name="styleSheet">
+            <string notr="true">font: 11pt &quot;MS Shell Dlg 2&quot;;
+</string>
+           </property>
+           <property name="html">
+            <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:12pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           </property>
           </widget>
           <widget class="QLineEdit" name="messageLineEdit_2">
            <property name="geometry">
@@ -192,18 +231,23 @@
              <height>20</height>
             </rect>
            </property>
+           <property name="styleSheet">
+            <string notr="true">font: 11pt &quot;MS Shell Dlg 2&quot;;
+</string>
+           </property>
           </widget>
           <widget class="QLabel" name="label_4">
            <property name="geometry">
             <rect>
-             <x>10</x>
+             <x>0</x>
              <y>320</y>
-             <width>91</width>
-             <height>51</height>
+             <width>151</width>
+             <height>61</height>
             </rect>
            </property>
            <property name="font">
             <font>
+             <pointsize>10</pointsize>
              <weight>75</weight>
              <bold>true</bold>
             </font>
@@ -240,6 +284,9 @@
            </property>
            <property name="whatsThis">
             <string/>
+           </property>
+           <property name="styleSheet">
+            <string notr="true"/>
            </property>
            <property name="text">
             <string>Send</string>
@@ -318,6 +365,9 @@
            <property name="whatsThis">
             <string/>
            </property>
+           <property name="styleSheet">
+            <string notr="true"/>
+           </property>
            <property name="text">
             <string>Send</string>
            </property>
@@ -339,6 +389,18 @@
      <height>21</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menuGame">
+    <property name="title">
+     <string>Game</string>
+    </property>
+   </widget>
+   <widget class="QMenu" name="menuAbout_Us">
+    <property name="title">
+     <string>About Us</string>
+    </property>
+   </widget>
+   <addaction name="menuGame"/>
+   <addaction name="menuAbout_Us"/>
   </widget>
  </widget>
  <resources/>

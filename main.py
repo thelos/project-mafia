@@ -1,6 +1,7 @@
 # C:\Users\Гость\AppData\Local\Programs\Python\Python37-32\Scripts\pip.exe"
 __author__ = 'TheLost'
 import sys
+# серверная часть
 import webbrowser
 from http.server import *
 
@@ -9,14 +10,22 @@ from PyQt5 import QtWidgets
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import QTableWidgetItem
 
+# импорты форм
 import ErrorMsg_mem
-import aithdialog
+import authdialog
 import creation
 import errormessage
 import mainwindow
+import passent
+# .
+# импорт клиентских функций
 from my_functions import GetAMainMessages, SendAMainMessage, GetSessionNumb, SendSessionNumberAndToken, AddOnline, \
     GetTabInformation, decoding, connect, connect_by_name, getbyconf
+# .
+# вк функции
 from vkfunction import getfullandsecondname
+
+# .
 
 role = 'Citizen'
 flag_serv = 0
@@ -62,15 +71,14 @@ class AMainThread(QThread):
     def run(self):
         while True:
             if self.flag == 1:
-                self.ss = GetAMainMessages(self.conf).replace(';', ' - ')
-                print(self.ss)
+                self.ss = GetAMainMessages(self.conf).replace(';', ' - ')[4:]
                 self.mainmessage.emit(self.ss)
+            else:
+                break
+            self.sleep(4)
 
     def stop(self):
         self.flag = 0
-
-    def go(self):
-        self.flag = 1
 
 
 class MainWindow(QtWidgets.QMainWindow, mainwindow.Ui_MainWindow):
@@ -86,15 +94,14 @@ class MainWindow(QtWidgets.QMainWindow, mainwindow.Ui_MainWindow):
         self.sessionnumber = ''
         self.AuthDialog()
         self.InitUi()
+
         self.transltoTable()
         self.reboot.clicked.connect(self.transltoTable)
-        self.dictofthreads['MainChatThread'].stop()
-        self.dictofthreads['MainChatThread'].start()
         self.flagrun = 0
 
     def AuthDialog(self):
         self.dialog = QtWidgets.QDialog()
-        self.dialog.ui = aithdialog.Ui_Dialog()
+        self.dialog.ui = authdialog.Ui_Dialog()
         self.dialog.ui.setupUi(self.dialog)
         self.dialog.ui.pushButton.clicked.connect(self.AuthByVK)
         self.dialog.exec_()
@@ -105,8 +112,8 @@ class MainWindow(QtWidgets.QMainWindow, mainwindow.Ui_MainWindow):
         password = self.dialog.ui.lineEdit_3.text()
         admin = self.id
         try:
-            int(maxmember)
-        except ValueError:
+            assert 6 <= int(maxmember) < 13
+        except:
             self.dialog_err = QtWidgets.QDialog()
             self.dialog_err.ui = ErrorMsg_mem.Ui_Dialog()
             self.dialog_err.ui.setupUi(self.dialog_err)
@@ -133,11 +140,12 @@ class MainWindow(QtWidgets.QMainWindow, mainwindow.Ui_MainWindow):
         self.conf = self.dialog.ui.lineEdit.text()
         self.flag_connection = 1
         self.flagrun = 1
-        connect_by_name(self.conf, self.sessionnumber, self.id)
+        connect_by_name(self.conf, self.sessionnumber, self.id, self.dialog.ui.lineEdit_3.text())
         self.conf = getbyconf(self.conf)
         self.dictofthreads['MainChatThread'].conf = self.conf
         self.dialog.close()
         self.transltoTable()
+        self.creationButthon.clicked.connect(self.passer)
 
     def creation(self):
         self.dialog = QtWidgets.QDialog()
@@ -146,7 +154,7 @@ class MainWindow(QtWidgets.QMainWindow, mainwindow.Ui_MainWindow):
         self.dialog.ui.pushButton.clicked.connect(self.creation_buffer)
         self.dialog.exec_()
 
-    def passer(self, i, j):
+    def passer(self):
         pass
 
     def InitUi(self):
@@ -154,13 +162,25 @@ class MainWindow(QtWidgets.QMainWindow, mainwindow.Ui_MainWindow):
         self.tabWidget.currentChanged.connect(self.onch)
         self.creationButthon.clicked.connect(self.creation)
 
+    def enter_helper(self):
+        result = connect(self.row, self.sessionnumber, self.dialog.ui.lineEdit.text())
+        if decoding(result['errors']) == 'No':
+            self.dialog.close()
+
     def doubleclick(self, i, j):
         if not self.flag_connection:
             temp = self.tableofrooms.currentItem()
-            row = temp.row()
-            col = temp.column()
-            connect(row, self.sessionnumber)
-            self.conf = row
+            self.row = temp.row()
+            self.col = temp.column()
+            if self.tableofrooms.item(self.row, self.col) == 'Yes':
+                self.dialog = QtWidgets.QDialog()
+                self.dialog.ui = passent.Ui_Dialog()
+                self.dialog.ui.setupUi(self.dialog)
+                self.dialog.ui.enter.clicked.connect(self.enter_helper)
+                self.dialog.exec_()
+            else:
+                connect(self.row, self.sessionnumber)
+            self.conf = self.row
             self.flag_connection = 1
             self.flagrun = 1
             self.dictofthreads['MainChatThread'].conf = self.conf
@@ -192,12 +212,15 @@ class MainWindow(QtWidgets.QMainWindow, mainwindow.Ui_MainWindow):
         elif i == 1 and self.flagrun:
             self.sendButton_2.clicked.connect(self.send_main_msg)
             self.killthreads('MainChatThread')
+            self.dictofthreads['MainChatThread'] = AMainThread()
             self.dictofthreads['MainChatThread'].mainmessage.connect(self.ChatHistory_Main.setText)
-            self.dictofthreads['MainChatThread'].go()
+            self.dictofthreads['MainChatThread'].start()
 
     def send_main_msg(self):
         if self.flagrun:
-            callback = SendAMainMessage(self.conf, self.id, self.messageLineEdit_2.text())
+            self.dictofthreads['MainChatThread'].msleep(4)
+            self.ChatHistory_Main.append(str(self.id) + ' - ' + self.messageLineEdit_2.text())
+            callback = SendAMainMessage(self.conf, self.id, self.sessionnumber, self.messageLineEdit_2.text())
             if callback == 'ConRE':
                 self.dialog_err = QtWidgets.QDialog()
                 self.dialog_err.ui = errormessage.Ui_Dialog()
@@ -237,8 +260,22 @@ class MainWindow(QtWidgets.QMainWindow, mainwindow.Ui_MainWindow):
                     self.dictofthreads[i].stop()
 
     def AuthByVK(self):
-        n = open('saves.txt').read()
-        if n == '':
+        try:
+            file = open('saves.txt')
+            n = file.read()
+            self.sessionnumber = n.strip().split(';')[1]
+            self.id = n.strip().split(';')[0]
+            self.dialog.close()
+            callback = AddOnline(self.sessionnumber, self.id)
+            if callback == 'ConRE':
+                self.dialog_err = QtWidgets.QDialog()
+                self.dialog_err.ui = errormessage.Ui_Dialog()
+                self.dialog_err.ui.setupUi(self.dialog_err)
+                self.dialog_err.setAttribute(Qt.WA_DeleteOnClose)
+                self.dialog_err.exec_()
+                sys.exit()
+            file.close()
+        except IOError:
             self.sessionnumber = GetSessionNumb()
             if self.sessionnumber == 'ConRE':
                 self.dialog_err = QtWidgets.QDialog()
@@ -252,18 +289,6 @@ class MainWindow(QtWidgets.QMainWindow, mainwindow.Ui_MainWindow):
             self.simpleth = AThreadForServer()
             self.simpleth.finished.connect(self.send)
             self.simpleth.start()
-        else:
-            self.sessionnumber = n.strip().split(';')[1]
-            self.id = n.strip().split(';')[0]
-            self.dialog.close()
-            callback = AddOnline(self.sessionnumber, self.id)
-            if callback == 'ConRE':
-                self.dialog_err = QtWidgets.QDialog()
-                self.dialog_err.ui = errormessage.Ui_Dialog()
-                self.dialog_err.ui.setupUi(self.dialog_err)
-                self.dialog_err.setAttribute(Qt.WA_DeleteOnClose)
-                self.dialog_err.exec_()
-                sys.exit()
 
     def send(self):
         global certain

@@ -55,6 +55,7 @@ for line in open('UserId_Key.txt', 'r'):
     s = line_t.split(' - ')
     lay[s[0]] = s[1]
 
+
 for line in open('BaseOfVk.txt', 'r'):
     line_t = line.strip()
     s = line_t.split(';')
@@ -63,8 +64,17 @@ for line in open('BaseOfVk.txt', 'r'):
 
 class MyServer(BaseHTTPRequestHandler):
     def do_WriteMainMessage(self):
+        text_temp = decoding_serv(self.headers['text'])
+        text = decoding_serv(self.headers['text']).split(' - ')
         temp = data_temp['name'][int(decoding_serv(self.headers['conf']))]
-        tab_information[temp]['mainmessages'].append(decoding_serv(self.headers['text']))
+        session = decoding_serv(self.headers['session'])
+        tab_information[temp]['mainmessages'].append(text_temp)
+        if text[1] == '!start' and session == tab_information[temp]['admin_sess']:
+            tear = tab_information[temp]['members'].split('/')
+            if int(tear[0]) > 6:
+                tab_information[temp]['mainmessages'].append('       Игра успешно начата! Удачи:)')
+            else:
+                tab_information[temp]['mainmessages'].append('       Игра не создана! Не хватает игроков!')
 
     def do_GetTabInformation(self):
         head = self.headers
@@ -100,14 +110,16 @@ class MyServer(BaseHTTPRequestHandler):
                     tab_information[name]['sessions'] = [decoding_serv(self.headers['sessions'])]
                 tab_information[name]['passwords'] = decoding_serv(self.headers['password'])
                 tab_information[name]['started'] = '0'
-                tab_information[name]['admin'] = decoding_serv(self.headers['admin'])
+                admin, sessadm = decoding_serv(self.headers['admin']).split(';')
+                tab_information[name]['admin'] = admin
+                tab_information[name]['admin_sess'] = sessadm
                 data_temp['name'].append(name)
                 data_temp['members'].append(tab_information[name]['members'])
                 data_temp['passwords'].append(tab_information[name]['passwords'])
                 data_temp['started'].append('0')
                 data_temp['admin'].append(tab_information[name]['admin'])
                 tab_information[name]['mainmessages'] = [
-                    'Привет! Вы зашли в комнату, для начала игры вы должны иметь в комнате как минимум 6 человек',
+                    '          Привет! Вы зашли в комнату, для начала игры вы должны иметь в комнате как минимум 6 человек',
                     'После получения этого кол-ва админ должен прописать !start для начала игры! Удачи:)']
                 self.send_response(200)
                 self.send_header('noerrors', 1)
@@ -159,8 +171,18 @@ class MyServer(BaseHTTPRequestHandler):
     def do_Connect(self):
         head = self.headers
         room = tab_information[data_temp['name'][int(decoding_serv(head['number']))]]
-        if int(room['members'].split('/')[0]) < int(room['members'].split('/')[1]) and room['started'] != '1':
-            room['sessions'].append(decoding_serv(head['session']))
+        if room['passwords'] == decoding_serv(self.headers['password']):
+            if int(room['members'].split('/')[0]) < int(room['members'].split('/')[1]) and room['started'] != '1':
+                room['sessions'].append(decoding_serv(head['session']))
+                self.send_response(200)
+                self.send_header('errors', encoding('No'))
+                self.send_header('passerr', encoding('No'))
+                self.end_headers()
+        else:
+            self.send_response(200)
+            self.send_header('errors', encoding('Yes'))
+            self.send_header('passerr', encoding('Yes'))
+            self.end_headers()
 
     def do_ConnectByName(self):
         head = self.headers

@@ -7,11 +7,24 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>300</height>
+    <height>277</height>
    </rect>
   </property>
+  <property name="font">
+   <font>
+    <family>MV Boli</family>
+   </font>
+  </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Auth</string>
+  </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>bandit.ico</normaloff>bandit.ico</iconset>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background-image: url(ae.jpg) ;
+color: rgb(202, 0, 0);</string>
   </property>
   <widget class="QPushButton" name="pushButton">
    <property name="geometry">
@@ -24,10 +37,14 @@
    </property>
    <property name="font">
     <font>
-     <pointsize>14</pointsize>
-     <weight>75</weight>
-     <bold>true</bold>
+     <family>MV Boli</family>
+     <pointsize>18</pointsize>
+     <weight>50</weight>
+     <bold>false</bold>
     </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true"/>
    </property>
    <property name="text">
     <string>AuthByVk</string>
@@ -44,10 +61,14 @@
    </property>
    <property name="font">
     <font>
-     <pointsize>14</pointsize>
-     <weight>75</weight>
-     <bold>true</bold>
+     <family>MV Boli</family>
+     <pointsize>18</pointsize>
+     <weight>50</weight>
+     <bold>false</bold>
     </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true"/>
    </property>
    <property name="text">
     <string>AuthByGmail</string>
@@ -64,10 +85,14 @@
    </property>
    <property name="font">
     <font>
-     <pointsize>14</pointsize>
-     <weight>75</weight>
-     <bold>true</bold>
+     <family>MV Boli</family>
+     <pointsize>18</pointsize>
+     <weight>50</weight>
+     <bold>false</bold>
     </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true"/>
    </property>
    <property name="text">
     <string>AuthByOK</string>

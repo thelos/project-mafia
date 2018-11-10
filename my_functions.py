@@ -26,7 +26,7 @@ def GetTabInformation(name='', password='', maxusers='12', admin='', sessionnumb
             h3.putheader('general', 0)
             h3.putheader('name', encoding(name))
             h3.putheader('password', encoding(password))
-            h3.putheader('admin', encoding(admin))
+            h3.putheader('admin', encoding(admin + ';' + sessionnumber))
             h3.putheader('maxusers', encoding(maxusers))
             h3.putheader('sessions', encoding(sessionnumber))
         h3.endheaders()
@@ -50,12 +50,13 @@ def GetAMainMessages(conf):
         return 'ConRE'
 
 
-def SendAMainMessage(conf, ide, text):
+def SendAMainMessage(conf, ide, session, text):
     try:
         h3 = http.client.HTTPConnection('localhost', 8000)
         h3.putrequest('WriteMainMessage', 'sda')
         h3.putheader('conf', encoding(str(conf)))
         h3.putheader('text', encoding(ide + ' - ' + text))
+        h3.putheader('session', encoding(session))
         h3.endheaders()
         h3.close()
     except ConnectionRefusedError:
@@ -109,24 +110,27 @@ def GetSessionNumb():
         return 'ConRE'
 
 
-def connect(number, sessionnumber):
+def connect(number, sessionnumber, password=''):
     try:
         h3 = http.client.HTTPConnection('localhost', 8000)
         h3.putrequest('Connect', 'Connect')
         h3.putheader('number', encoding(str(number)))
         h3.putheader('session', encoding(sessionnumber))
+        h3.putheader('password', encoding(password))
         h3.endheaders()
+        return h3.getresponse().headers
     except ConnectionRefusedError:
         return 'ConRE'
 
 
-def connect_by_name(conf, sessionnumber, ide):
+def connect_by_name(conf, sessionnumber, ide, password):
     try:
         h3 = http.client.HTTPConnection('localhost', 8000)
         h3.putrequest('ConnectByName', 'Connect')
         h3.putheader('name', encoding(conf))
         h3.putheader('session', encoding(sessionnumber))
         h3.putheader('ide', encoding(ide))
+        h3.putheader('password', encoding(password))
         h3.endheaders()
     except ConnectionRefusedError:
         return 'ConRE'
